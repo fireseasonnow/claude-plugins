@@ -118,10 +118,9 @@ commits.
 
 # Submissions
 
-> **Nothing below has been submitted.** These are prepared drafts. Submitting is
-> a separate step that needs the maintainer's explicit go-ahead — a submission
-> attaches a review record to a real person's name, and it cannot be quietly
-> undone.
+**Status: `session-standup` submitted 2026-08-19** via the Console form,
+awaiting review. Nothing else here has been submitted; each remaining venue is a
+separate step needing the maintainer's go-ahead.
 
 Verified 2026-08-19. Submission venues change; re-check each URL before using
 the text below.
@@ -171,19 +170,83 @@ The safety screening will see a plugin that reads every session transcript on
 the machine. That is inherent to what it does — the README and `SKILL.md` both
 say so up front rather than leaving a reviewer to discover it.
 
-### Form values
+### Submitted values (2026-08-19)
+
+The form has two pages. What was sent:
 
 | Field | Value |
 |---|---|
+| Link to plugin | `https://github.com/fireseasonnow/claude-plugins` |
+| Path within repository | `plugins/session-standup` |
+| Plugin homepage | `https://github.com/fireseasonnow/claude-plugins/tree/main/plugins/session-standup` |
 | Plugin name | `session-standup` |
-| Display name | `Standup` |
-| Repository / source | `https://github.com/fireseasonnow/claude-plugins` |
-| Plugin path in repo | `plugins/session-standup` |
-| Category | Productivity |
-| Description | the **long description** above, verbatim |
-| Short description | the **short description** above, verbatim |
-| Author | fireseason |
-| License | MIT |
+| Plugin description | the **directory description** below |
+| Example use cases | three, below |
+| Supported platforms | **Claude Code only** — not Cowork |
+| License type | `MIT` |
+| Privacy policy URL | `https://github.com/fireseasonnow/claude-plugins#privacy` |
+| Email | the maintainer's deliverable address — **not** the GitHub `users.noreply.github.com` commit author, which cannot receive mail |
+
+Cowork was left unchecked deliberately: the plugin reads
+`~/.claude/projects/*.jsonl` and shells out to `node` and `git`, and it has not
+been tested on that surface. Add it only after testing.
+
+### Directory description
+
+Longer than the manifest description because the directory form takes a
+textarea. It expands the canonical long description; it must never contradict
+it.
+
+> Turn local Claude Code session history into a standup report — what you
+> finished, which repos and branches it landed in, and which PRs or issues it
+> touched.
+>
+> Most standup tools read your commits. This one reads what you were actually
+> doing, so it still has something to say on a day you shipped nothing. It
+> parses the transcripts Claude Code already writes to `~/.claude/projects`,
+> corroborates them against `git log` so shipped work outranks activity, and
+> writes the result as Yesterday / Today / Blockers, short enough to paste into
+> Slack.
+>
+> Works retroactively — no hooks, no logging to set up, nothing to have
+> remembered to turn on. Ask on your first day using it and it covers the week
+> you already worked.
+>
+> Everything runs locally and the collector makes no network calls. It reduces
+> megabytes of transcripts to a few kilobytes of digest, so your session history
+> never enters the model's context — only the summary does. Known secret shapes
+> (API keys, PEM keys, JWTs, credentials in URLs) are stripped before printing,
+> and `$HOME` collapses to `~`.
+>
+> Requires Node 18+ or Bun. Zero dependencies.
+
+### Example use cases
+
+1. "Give me my standup" before the daily meeting — covers the previous working
+   day plus this morning, grouped by theme rather than one bullet per session,
+   with PR and issue numbers pulled from what you actually referenced.
+2. "What did I do last week?" — a weekly recap across every project,
+   corroborated against your commits so what shipped outranks what you merely
+   opened.
+3. "What did I work on in the payments repo since Monday?" — scoped to one
+   project and an arbitrary window, for a status update or a self-review.
+
+### After submission
+
+- Approved plugins are pinned to a commit SHA in the community catalog; CI bumps
+  the pin as new commits are pushed, so updates need no resubmission.
+- The catalog syncs nightly, so expect a lag between approval and the listing.
+- Check whether it is live:
+  ```bash
+  curl -sL https://raw.githubusercontent.com/anthropics/claude-plugins-community/main/.claude-plugin/marketplace.json \
+    | grep -c '"session-standup"'
+  ```
+- Name availability was confirmed against all 2,281 catalog entries on
+  2026-08-19: `session-standup` was free. Nearest neighbours are
+  `standup-logger` (hook-based, logs as you go) and `repo-recap` (git only).
+- Likeliest review question: why the plugin reads *all* projects rather than the
+  current one. Answer: a standup spans repos; scoping to one project would miss
+  most of the day.
 
 ## 2. `claudemarketplaces.com` — passive, no action needed
 
