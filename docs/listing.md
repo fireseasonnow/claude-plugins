@@ -126,35 +126,50 @@ commits.
 Verified 2026-08-19. Submission venues change; re-check each URL before using
 the text below.
 
-## 1. Anthropic plugin directory — primary
+## 1. Anthropic community marketplace — primary
 
-One form feeds both Anthropic-run directories
-([`claude-plugins-official`](https://github.com/anthropics/claude-plugins-official),
-[`claude-plugins-community`](https://github.com/anthropics/claude-plugins-community)).
+Submission targets **`claude-community`** only — the public community
+marketplace, added by users with `/plugin marketplace add
+anthropics/claude-plugins-community` and installed from as `@claude-community`.
 
-**Submit at:** <https://clau.de/plugin-directory-submission>
+**`claude-plugins-official` is curated by Anthropic at its own discretion.
+There is no application process, and the submission form does not add plugins
+to it.** Nothing here can influence that; treat it as out of reach.
+
+**Submit at:** <https://platform.claude.com/plugins/submit> (Console form)
+
+The alternative form at
+`claude.ai/admin-settings/directory/submissions/plugins/new` requires a Team or
+Enterprise organization with directory-management access. As an individual
+author, use the Console form.
 
 **Do not open a pull request** against `anthropics/claude-plugins-community`.
-It is a read-only mirror synced nightly from Anthropic's internal review
-pipeline, and PRs opened against it are closed automatically.
+It is a read-only catalog synced nightly from the review pipeline, and PRs
+opened against it are closed automatically.
 
-**Process:** submit → automated security scan → manual review by Anthropic →
-listed. Review latency is not under our control, so no release depends on it.
+**Process:** submit → `claude plugin validate` (the pipeline runs the same check
+you run locally) → automated safety screening → review → approval. On approval
+the plugin is pinned to a specific commit SHA in the community catalog, and CI
+bumps that pin automatically as you push new commits. The catalog syncs
+nightly, so expect a delay between approval and the listing appearing.
+
+Check whether it is live by searching for `session-standup` in
+<https://github.com/anthropics/claude-plugins-community/blob/main/.claude-plugin/marketplace.json>.
 
 ### Pre-submission checklist
 
 | Criterion | Status |
 |---|---|
+| `claude plugin validate ./plugins/session-standup` passes | ✅ passes, and with `--strict` |
 | Standard plugin layout (`.claude-plugin/plugin.json`, `skills/`, `README.md`) | ✅ |
-| `plugin.json` manifest with complete metadata | ✅ passes `claude plugin validate --strict` |
 | Documentation a reviewer can read | ✅ plugin README covers install, use, every flag, and redaction limits |
 | Name is final (names are immutable once published) | ✅ `session-standup` |
 | Security posture stated plainly | ✅ no network calls; reads all local transcripts; redaction documented as a safety net, not a guarantee |
 | License present | ✅ MIT, repo root and plugin directory |
 
-The security scan will see a plugin that reads every session transcript on the
-machine. That is inherent to what it does — the README and `SKILL.md` both say
-so up front rather than leaving a reviewer to discover it.
+The safety screening will see a plugin that reads every session transcript on
+the machine. That is inherent to what it does — the README and `SKILL.md` both
+say so up front rather than leaving a reviewer to discover it.
 
 ### Form values
 
@@ -162,7 +177,8 @@ so up front rather than leaving a reviewer to discover it.
 |---|---|
 | Plugin name | `session-standup` |
 | Display name | `Standup` |
-| Marketplace / source | `https://github.com/fireseasonnow/claude-plugins` |
+| Repository / source | `https://github.com/fireseasonnow/claude-plugins` |
+| Plugin path in repo | `plugins/session-standup` |
 | Category | Productivity |
 | Description | the **long description** above, verbatim |
 | Short description | the **short description** above, verbatim |
