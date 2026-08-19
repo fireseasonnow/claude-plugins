@@ -1,6 +1,7 @@
 # session-standup
 
-Turns your local Claude Code session history into a standup report.
+Turns local Claude Code session history into a standup report — what you
+finished and where it landed.
 
 Most standup tools read your commits. This one reads what you were actually
 doing — so it still has something to say on a day you shipped nothing.

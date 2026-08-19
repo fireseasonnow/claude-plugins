@@ -1,7 +1,7 @@
 {
   "name": "session-standup",
   "displayName": "Standup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turn local Claude Code session history into a standup report — what you finished, which repos and branches it landed in, and which PRs or issues it touched. Reads ~/.claude/projects transcripts and runs read-only git locally; nothing leaves your machine.",
   "author": {
     "name": "fireseason"
@@ -10,10 +10,11 @@
   "homepage": "https://github.com/fireseasonnow/claude-plugins",
   "repository": "https://github.com/fireseasonnow/claude-plugins",
   "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "claude-plugin",
+    "claude-code-skill",
     "standup",
-    "recap",
-    "session-history",
-    "productivity",
-    "git"
+    "developer-productivity"
   ]
 }

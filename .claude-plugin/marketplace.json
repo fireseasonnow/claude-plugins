@@ -15,7 +15,15 @@
       },
       "source": "./plugins/session-standup",
       "category": "productivity",
-      "homepage": "https://github.com/fireseasonnow/claude-plugins"
+      "homepage": "https://github.com/fireseasonnow/claude-plugins",
+      "keywords": [
+        "claude-code",
+        "claude-code-plugin",
+        "claude-plugin",
+        "claude-code-skill",
+        "standup",
+        "developer-productivity"
+      ]
     }
   ]
 }

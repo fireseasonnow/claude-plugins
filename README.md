@@ -2,8 +2,11 @@
 
 Claude Code plugins by [fireseason](https://github.com/fireseasonnow).
 
-**[session-standup](./plugins/session-standup)** — turns your local session
-history into a standup report.
+**[session-standup](./plugins/session-standup)** turns local Claude Code
+session history into a standup report — what you finished, which repos and
+branches it landed in, and which PRs or issues it touched. For anyone who has
+to say what they did yesterday and would rather not reconstruct it from
+`git log`.
 
 ```
 /plugin marketplace add fireseasonnow/claude-plugins
@@ -11,19 +14,7 @@ history into a standup report.
 ```
 
 Then just ask — "give me my standup", "what did I do yesterday", "recap the
-past 3 days". The skill registers as `session-standup:standup` if you'd rather
-name it directly.
-
----
-
-## What it does
-
-Most standup tools read your commits. This one reads what you were actually
-doing — so it still has something to say on a day you shipped nothing.
-
-It reads the transcripts Claude Code already writes to
-`~/.claude/projects/*.jsonl`, corroborates them against `git log`, and writes
-the result as something you can paste into Slack:
+past 3 days":
 
 ```markdown
 **Yesterday**
@@ -39,6 +30,18 @@ the result as something you can paste into Slack:
 ```
 
 *(Illustrative — assembled from invented sessions, not a real run.)*
+
+The skill registers as `session-standup:standup` if you'd rather name it
+directly.
+
+## What it does
+
+Most standup tools read your commits. This one reads what you were actually
+doing — so it still has something to say on a day you shipped nothing.
+
+It reads the transcripts Claude Code already writes to
+`~/.claude/projects/*.jsonl`, corroborates them against `git log`, and writes
+the result as something you can paste into Slack.
 
 The work splits in two: a dependency-free collector reduces megabytes of
 transcripts to a few kilobytes of digest, and the skill instructions turn that
@@ -88,13 +91,15 @@ paste it.**
 Full detail, including every collector flag, is in the
 [plugin README](./plugins/session-standup/README.md).
 
+---
+
 ## Releasing
 
 Claude Code keys a plugin's install path by its declared `version`, so a
 version that never changes can strand users on a broken copy. **Bump
 `version` in `plugins/session-standup/.claude-plugin/plugin.json` in the same
-commit as any change to shipped content** — the skill, the collector, or
-`SKILL.md`. Documentation-only changes do not need it.
+commit as any change to shipped content** — the skill, the collector,
+`SKILL.md`, or the manifest itself. Documentation-only changes do not need it.
 
 Before tagging a release, from `plugins/session-standup/skills/standup/`:
 
@@ -102,6 +107,27 @@ Before tagging a release, from `plugins/session-standup/skills/standup/`:
 node --test                                              # 16 tests, no dependencies
 docker run --rm -v "$PWD":/s:ro -w /s node:18-alpine node --test   # the stated floor
 ```
+
+### Listing check
+
+[`docs/listing.md`](./docs/listing.md) is the source of truth for every public
+description, keyword, and topic. Before tagging, confirm nothing has drifted
+away from it:
+
+```bash
+claude plugin validate . --strict                          # marketplace manifest
+claude plugin validate ./plugins/session-standup --strict   # plugin manifest
+gh repo view fireseasonnow/claude-plugins \
+  --json description,homepageUrl,repositoryTopics           # compare to docs/listing.md
+```
+
+**A surface that disagrees with `docs/listing.md` blocks the release until it
+is resolved** — fix the surface, or change the listing document first and then
+every surface derived from it.
+
+This check is deliberately manual. Replace it with a script the first time
+either trigger fires: a third plugin joins the marketplace, or this check
+catches real drift. Until then the machinery would cost more than the drift.
 
 ## License
 
