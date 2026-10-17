@@ -1,5 +1,7 @@
 # claude-plugins
 
+![session-standup turning "give me my standup" into a Yesterday / Today / Blockers report](docs/social-preview.png)
+
 Claude Code plugins by [fireseason](https://github.com/fireseasonnow).
 
 **[session-standup](./plugins/session-standup)** turns local Claude Code
@@ -12,24 +14,6 @@ to say what they did yesterday and would rather not reconstruct it from
 /plugin marketplace add fireseasonnow/claude-plugins
 /plugin install session-standup@fireseason-plugins
 ```
-
-Then just ask — "give me my standup", "what did I do yesterday", "recap the
-past 3 days":
-
-```markdown
-**Yesterday**
-- Fixed the token-refresh race in the gateway — auth-service, PR #214
-- Traced the flaky checkout test to a shared fixture; fix in review
-- Spiked two approaches for the export queue, settled on the simpler one
-
-**Today**
-- Land the fixture fix, start on the export queue *(inference)*
-
-**Blockers**
-- None
-```
-
-*(Illustrative — assembled from invented sessions, not a real run.)*
 
 The skill registers as `session-standup:standup` if you'd rather name it
 directly.
