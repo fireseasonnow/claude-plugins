@@ -1,5 +1,7 @@
 # claude-plugins
 
+[![CI](https://github.com/fireseasonnow/claude-plugins/actions/workflows/ci.yml/badge.svg)](https://github.com/fireseasonnow/claude-plugins/actions/workflows/ci.yml)
+
 ![session-standup turning "give me my standup" into a Yesterday / Today / Blockers report](docs/social-preview.png)
 
 Claude Code plugins by [fireseason](https://github.com/fireseasonnow).
